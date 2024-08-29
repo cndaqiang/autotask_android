@@ -1,0 +1,2 @@
+# autotask_android
+基于airtest_mobileauto的安卓自动化任务脚本
