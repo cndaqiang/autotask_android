@@ -23,5 +23,5 @@ figdir=assets
 logfile={
     2: "result.2.txt"}
 ```
-计划任务设置
-![alt text](doc/crontab.png)
+计划任务设置，同[关于windows平台的计划任务](https://cndaqiang.github.io/WZRY/howtorun.html#%E5%85%B3%E4%BA%8Ewindows%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1)
+![alt text](https://cndaqiang.github.io/WZRY/doc/crontab_win.png)
