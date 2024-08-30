@@ -5,7 +5,7 @@
 # Author : cndaqiang             #
 # Update : 2024-08-29            #
 # Build  : 2024-08-29            #
-# What   : 科研通网站签到         #
+# What   : 网站签到         #
 ##################################
 try:
     from airtest_mobileauto.control import *
@@ -33,12 +33,12 @@ class via_ablesci():
         self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.mynode}.ce.txt",
                             mynode=self.mynode, totalnode=self.totalnode)
         #
-        self.prefix="ablesci"
-        self.初始化FILE=f"{self.prefix}.{self.mynode}初始化FILE.txt"
-        self.失败FILE=f"{self.prefix}.{self.mynode}运行失败FILE.txt"
-        self.Tool.removefile(self.失败FILE)
+        self.prefix = __name__ # 类的名字
+        self.dayFILE = f"{self.prefix}.txt"
         self.timelimit = 60*10
         self.运行时间 = [3.0, 4.0]
+        self.today = self.Tool.time_getweek()
+        self.yesterday = (self.today-1)%7
     #
     def stop(self):
         self.APPOB.关闭APP()
@@ -47,53 +47,69 @@ class via_ablesci():
         if not connect_status():
             self.移动端.连接设备()
         if times == 0:
+            self.today = self.Tool.time_getweek()
+            self.yesterday = (self.today-1)%7
+            try:
+                self.yesterday = int(self.Tool.readfile(self.dayFILE)[0].strip())
+            except:
+                TimeECHO(f"未能从{self.dayFILE}中获取到上次运行时间")
             self.Tool.timelimit(timekey="RUN", limit=self.timelimit, init=True)
+        #
         if self.Tool.timelimit(timekey="RUN", limit=self.timelimit, init=False):
-            content = f"{self.prefix}.运行超时"
-            TimeECHO(content)
-            self.Tool.touchfile(self.失败FILE,content)
+            TimeECHO(f"{self.prefix}.运行超时")
+            self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
             return
+        #
+        if times > 8:
+            TimeECHO("失败次数太多，停止")
+            self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
+            return   
+        #
         times = times + 1
         # 重新打开via浏览器
         self.APPOB.重启APP()
+        #
+        # ------------------------------------------------------------------------------
+        # 不存在对应图片则设置为None
         书签图标 = Template(r"tpl1724917367398.png", record_pos=(-0.234, 0.136), resolution=(960, 540))
-        今日签到 = Template(r"tpl1724917379162.png", record_pos=(0.266, -0.036), resolution=(960, 540))
-        关闭 = Template(r"tpl1724917393304.png", record_pos=(0.155, 0.132), resolution=(960, 540))
+        签到入口 = Template(r"tpl1724917379162.png", record_pos=(0.266, -0.036), resolution=(960, 540))
+        今日签到 = Template(r"tpl1724917393304.png", record_pos=(0.155, 0.132), resolution=(960, 540))
         主页入口 = Template(r"tpl1724918907933.png", record_pos=(-0.398, -0.18), resolution=(960, 540))
         网站主页元素 = []
         网站主页元素.append(主页入口)
-        网站主页元素.append(今日签到)
-
-        # ------------------------------------------------------------------------------
-        run_class_command(self=self, command=self.Tool.readfile(self.初始化FILE))
+        网站主页元素.append(签到入口)
         # ------------------------------------------------------------------------------
         # 打开网站
-        self.Tool.existsTHENtouch(书签图标,self.prefix+"书签图标",savepos=False)
+        self.Tool.existsTHENtouch(书签图标, self.prefix+"书签图标", savepos=False)
         # 检测是否打开成功
         存在, 网站主页元素 = self.Tool.存在任一张图(网站主页元素, self.prefix+"网站主页元素")
         for i in range(10):
             if 存在:
                 break
-            self.Tool.existsTHENtouch(主页入口,self.prefix+"主页入口",savepos=False)
+            self.Tool.existsTHENtouch(主页入口, self.prefix+"主页入口", savepos=False)
             sleep(5)
             存在, 网站主页元素 = self.Tool.存在任一张图(网站主页元素, self.prefix+"网站主页元素")
         #
         if not 存在 and times < 5:
-            content="打开主页失败"
-            TimeECHO(content)
-            self.Tool.touchfile(self.失败FILE,content)
-            return self.run(times)
-        #
+            TimeECHO("打开主页失败")
+            return self.run(times)         
         # ------------------------------------------------------------------------------
-        #下面为各个网站的领取图标
-        # ------------------------------------------------------------------------------
-        
-        if not self.Tool.existsTHENtouch(今日签到,self.prefix+"今日签到",savepos=False):
-            TimeECHO("找不到今日签到，可能签到过了")
-        self.Tool.existsTHENtouch(关闭,self.prefix+"关闭",savepos=False)
-        return 
         #
-
+        if 签到入口:
+            self.Tool.existsTHENtouch(签到入口, self.prefix+"签到入口", savepos=False)
+        #
+        if self.Tool.existsTHENtouch(今日签到, self.prefix+"今日签到", savepos=False):
+            self.yesterday = self.today
+        else:
+            if self.yesterday == self.today:
+                TimeECHO("找不到今日签到，应该签到过了")
+            else:
+                TimeECHO("找不到今日签到，再次尝试签到")
+                return self.run(times)
+        #
+        self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
+        return
+    #
     def looprun(self, times=0):
         times = times + 1
         startclock = self.运行时间[0]
