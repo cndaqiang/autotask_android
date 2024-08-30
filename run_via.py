@@ -22,6 +22,7 @@ import importlib
 
 class run_via():
     def __init__(self):
+        self.prefix=self.__class__.__name__ # 类的名字
         # device
         self.mynode = Settings.mynode
         self.totalnode = Settings.totalnode
@@ -30,15 +31,12 @@ class run_via():
         self.设备类型 = self.移动端.设备类型
         self.APPID = "mark.via"
         self.APPOB = appOB(APPID=self.APPID, big=True, device=self.移动端)
-        self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.mynode}.ce.txt",
+        self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.prefix}.txt",
                             mynode=self.mynode, totalnode=self.totalnode)
         #
-        self.prefix="via"
-        self.初始化FILE=f"{self.prefix}.{self.mynode}初始化FILE.txt"
-        self.失败FILE=f"{self.prefix}.{self.mynode}运行失败FILE.txt"
-        self.Tool.removefile(self.失败FILE)
+        self.只战一天FILE =f"{self.prefix}.oneday.txt"  # 今天执行完之后，直接结束程序。适用采用crontab等模式周期性运行脚本，而不采用本脚本自带的循环。
         self.timelimit = 60*10
-        self.运行时间 = [3.0, 4.0]
+        self.运行时间 = [0.01, 23.5]
 
     def check_status(self):
         if not connect_status():
@@ -73,6 +71,7 @@ class run_via():
             except:
                 traceback.print_exc()
                 continue
+        #
 
 
 
@@ -80,16 +79,22 @@ class run_via():
         times = times + 1
         startclock = self.运行时间[0]
         endclock = self.运行时间[1]
+        leftmin = self.Tool.hour_in_span(startclock, endclock)*60.0
         while True:
-            leftmin = self.Tool.hour_in_span(startclock, endclock)*60.0
             if leftmin > 0:
                 TimeECHO("剩余%d分钟进入新的一天" % (leftmin))
                 self.APPOB.关闭APP()
                 self.移动端.重启重连设备(leftmin*60)
+                leftmin = self.Tool.hour_in_span(startclock, endclock)*60.0
                 continue
             times = times+1
             TimeECHO("="*10)
             self.run()
+            #
+            if os.path.exists(self.只战一天FILE):
+                return
+            # 如果提前结束了，就让脚本再等一会
+            leftmin = self.Tool.hour_in_span(endclock+0.1,startclock)*60.0
 
 
 if __name__ == "__main__":
@@ -98,6 +103,5 @@ if __name__ == "__main__":
         config_file = str(sys.argv[1])
     Settings.Config(config_file)
     ce = run_via()
-    ce.run()
-    #ce.looprun()
-    #exit()
+    ce.looprun()
+    exit()

@@ -22,6 +22,7 @@ import sys
 
 class via_muchong():
     def __init__(self):
+        self.prefix = self.__class__.__name__  # 类的名字
         # device
         self.mynode = Settings.mynode
         self.totalnode = Settings.totalnode
@@ -30,25 +31,26 @@ class via_muchong():
         self.设备类型 = self.移动端.设备类型
         self.APPID = "mark.via"
         self.APPOB = appOB(APPID=self.APPID, big=True, device=self.移动端)
-        self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.mynode}.ce.txt",
+        self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.prefix}.txt",
                             mynode=self.mynode, totalnode=self.totalnode)
         #
-        self.prefix = __name__ # 类的名字
         self.dayFILE = f"{self.prefix}.txt"
         self.timelimit = 60*10
         self.运行时间 = [3.0, 4.0]
         self.today = self.Tool.time_getweek()
-        self.yesterday = (self.today-1)%7
+        self.yesterday = (self.today-1) % 7
     #
+
     def stop(self):
         self.APPOB.关闭APP()
     #
+
     def run(self, times=0):
         if not connect_status():
             self.移动端.连接设备()
         if times == 0:
             self.today = self.Tool.time_getweek()
-            self.yesterday = (self.today-1)%7
+            self.yesterday = (self.today-1) % 7
             try:
                 self.yesterday = int(self.Tool.readfile(self.dayFILE)[0].strip())
             except:
@@ -63,7 +65,7 @@ class via_muchong():
         if times > 8:
             TimeECHO("失败次数太多，停止")
             self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
-            return   
+            return
         #
         times = times + 1
         # 重新打开via浏览器
@@ -92,7 +94,7 @@ class via_muchong():
         #
         if not 存在 and times < 5:
             TimeECHO("打开主页失败")
-            return self.run(times)         
+            return self.run(times)
         # ------------------------------------------------------------------------------
         #
         if 签到入口:
@@ -110,6 +112,7 @@ class via_muchong():
         self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
         return
     #
+
     def looprun(self, times=0):
         times = times + 1
         startclock = self.运行时间[0]
