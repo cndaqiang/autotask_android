@@ -42,8 +42,9 @@ python run_via.py config.win.txt
 ### Windows平台: bat文件运行
 双击`run_via.bat`, 需要根据python环境修改其中的python路径
 
-亦可将`run_via.bat`添加到系统的自动化任务，方法同:[关于windows平台的计划任务](https://cndaqiang.github.io/WZRY/howtorun.html#%E5%85%B3%E4%BA%8Ewindows%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1)
-![alt text](https://cndaqiang.github.io/WZRY/doc/crontab_win.png)
+亦可将`run_via.bat`添加到系统的自动化任务
+
+![alt text](doc/crontab_win.png)
 
 ### Linux平台
 ```
