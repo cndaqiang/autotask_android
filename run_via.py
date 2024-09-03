@@ -46,6 +46,7 @@ class run_via():
     #
     def stop(self):
         self.APPOB.关闭APP()
+        self.移动端.关闭设备()
     #
     def run(self):
         if not self.check_status():
@@ -67,7 +68,6 @@ class run_via():
                 # 使用类来创建一个对象实例
                 tag_object.APPOB.big=False
                 tag_object.run()
-                tag_object.stop()
             except:
                 traceback.print_exc()
                 continue
@@ -92,7 +92,7 @@ class run_via():
             self.run()
             #
             if os.path.exists(self.只战一天FILE):
-                return
+                return self.stop()
             # 如果提前结束了，就让脚本再等一会
             leftmin = self.Tool.hour_in_span(endclock+0.1,startclock)*60.0
 

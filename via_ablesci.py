@@ -34,7 +34,6 @@ class via_ablesci():
         self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.prefix}.txt",
                             mynode=self.mynode, totalnode=self.totalnode)
         #
-        self.prefix = self.__class__.__name__  # 类的名字
         self.dayFILE = f"{self.prefix}.txt"
         self.timelimit = 60*10
         self.运行时间 = [3.0, 4.0]
@@ -89,7 +88,9 @@ class via_ablesci():
         for i in range(10):
             if 存在:
                 break
-            self.Tool.existsTHENtouch(主页入口, self.prefix+"主页入口", savepos=False)
+            # 有则更新，无则采用旧的入口
+            self.Tool.存在任一张图([主页入口], self.prefix+"主页入口", savepos=True)
+            self.Tool.existsTHENtouch(主页入口, self.prefix+"主页入口", savepos=True)
             sleep(5)
             存在, 网站主页元素 = self.Tool.存在任一张图(网站主页元素, self.prefix+"网站主页元素")
         #
@@ -99,7 +100,9 @@ class via_ablesci():
         # ------------------------------------------------------------------------------
         #
         if 签到入口:
-            self.Tool.existsTHENtouch(签到入口, self.prefix+"签到入口", savepos=False)
+            # 有则更新，无则采用旧的入口
+            self.Tool.存在任一张图([签到入口], self.prefix+"签到入口", savepos=True)
+            self.Tool.existsTHENtouch(签到入口, self.prefix+"签到入口", savepos=True)
         #
         if self.Tool.existsTHENtouch(今日签到, self.prefix+"今日签到", savepos=False):
             self.yesterday = self.today

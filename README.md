@@ -19,6 +19,7 @@ python -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/s
 ## 我的配置
 * 模拟器MuMu
 * 分辨率`960x540`,dpi`160`
+* dpi或者分辨率不同很容易识别失败。
 
 配置文件`config.win.txt`
 ```

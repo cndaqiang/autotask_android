@@ -88,7 +88,9 @@ class via_muchong():
         for i in range(10):
             if 存在:
                 break
-            self.Tool.existsTHENtouch(主页入口, self.prefix+"主页入口", savepos=False)
+            # 有则更新，无则采用旧的入口
+            self.Tool.存在任一张图([主页入口], self.prefix+"主页入口", savepos=True)
+            self.Tool.existsTHENtouch(主页入口, self.prefix+"主页入口", savepos=True)
             sleep(5)
             存在, 网站主页元素 = self.Tool.存在任一张图(网站主页元素, self.prefix+"网站主页元素")
         #
@@ -98,7 +100,9 @@ class via_muchong():
         # ------------------------------------------------------------------------------
         #
         if 签到入口:
-            self.Tool.existsTHENtouch(签到入口, self.prefix+"签到入口", savepos=False)
+            # 有则更新，无则采用旧的入口
+            self.Tool.存在任一张图([签到入口], self.prefix+"签到入口", savepos=True)
+            self.Tool.existsTHENtouch(签到入口, self.prefix+"签到入口", savepos=True)
         #
         if self.Tool.existsTHENtouch(今日签到, self.prefix+"今日签到", savepos=False):
             self.yesterday = self.today
@@ -106,7 +110,7 @@ class via_muchong():
             if self.yesterday == self.today:
                 TimeECHO("找不到今日签到，应该签到过了")
             else:
-                TimeECHO("找不到今日签到，再次尝试签到")
+                TimeECHO("找不到今日签到，再次尝试签到。")
                 return self.run(times)
         #
         self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
