@@ -41,8 +41,7 @@ python via_ablesci.py config.win.txt
 ```
 
 ## 基于浏览器的签到
-**[基于via浏览器的签到](run_via.md)**
-* via浏览器 开启桌面模式，自己登录网页并收藏网页到主页
+* **via浏览器** 开启桌面模式，自己登录网页并收藏网页到主页
 * `via_ablesci`, [科研通](https://www.ablesci.com/)每日签到
 * `via_muchong`, [小木虫](https://muchong.com/bbs/)每日签到
 
