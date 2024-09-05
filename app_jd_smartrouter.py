@@ -42,6 +42,7 @@ class app_jd_smartrouter():
         self.APPOB.big = False
         #
         self.looptime = 8
+        self.成功次数 = 0
     #
 
     def stop(self):
@@ -97,9 +98,10 @@ class app_jd_smartrouter():
             sleep(12)
             self.APPOB.打开APP()
             存在, 主页元素 = self.Tool.存在任一张图(主页元素, self.prefix+"主页元素")
-        # 检测主页
-        self.Tool.存在任一张图([二级入口], self.prefix+"二级入口", savepos=True)
-        self.Tool.existsTHENtouch(二级入口, self.prefix+"二级入口", savepos=True)
+        # 寻找入口
+        if 二级入口:
+            self.Tool.存在任一张图([二级入口], self.prefix+"二级入口", savepos=True)
+            self.Tool.existsTHENtouch(二级入口, self.prefix+"二级入口", savepos=True)
         #
         if 三级入口:
             self.Tool.存在任一张图([三级入口], self.prefix+"三级入口", savepos=True)
@@ -111,10 +113,14 @@ class app_jd_smartrouter():
             return self.run(times)
         #
         self.Tool.存在任一张图([领取按钮], self.prefix+"领取按钮", savepos=True)
+        # ------------------------------------------------------------------------------
+        # 下面是特色部分
         if not self.Tool.existsTHENtouch(领取按钮, self.prefix+"领取按钮", savepos=True):
             TimeECHO(f"{self.prefix}检测不到领取按钮")
             return self.run(times)
         else:
+            self.成功次数 = self.成功次数 + 1
+            self.yesterday = self.today
             for i in range(10):
                 # 这里再次点击是为了让程序人为我们在看, 使用领取图标的好处还有，万一被跳转了，还可以再点回来
                 TimeECHO(f"{self.prefix}.模拟人手点击看广告")
@@ -126,8 +132,10 @@ class app_jd_smartrouter():
                 if 存在:
                     TimeECHO(f"{self.prefix}.注意, 貌似没有跳转到广告界面")
                     return self.run(times)
+            #
+            if self.成功次数 < self.looptime:
+                return self.run(times=0)
         #
-        self.yesterday = self.today
         self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
         self.APPOB.关闭APP()
         return True
@@ -146,8 +154,8 @@ class app_jd_smartrouter():
                 continue
             times = times+1
             TimeECHO("="*10)
-            for i in range(self.looptime):
-                self.run()
+            self.成功次数 = 0
+            self.run()
 
 
 if __name__ == "__main__":
@@ -156,7 +164,5 @@ if __name__ == "__main__":
         config_file = str(sys.argv[1])
     Settings.Config(config_file)
     ce = app_jd_smartrouter()
-    # 每天领取多次
-    for i in range(ce.looptime):
-        ce.run()
+    ce.run()
     exit()

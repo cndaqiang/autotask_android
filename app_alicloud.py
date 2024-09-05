@@ -114,12 +114,14 @@ class app_alicloud():
             return self.run(times)
         #
         self.Tool.存在任一张图([领取按钮], self.prefix+"领取按钮", savepos=True)
-        #
+        # ------------------------------------------------------------------------------
+        # 下面是特色部分
         # 检测是否有领取按钮，有的话，领取之后再循环一次检测是否有领取成功按钮
         if self.Tool.existsTHENtouch(领取按钮, self.prefix+"领取按钮", savepos=True):
             self.成功次数 = self.成功次数 + 1
+            self.yesterday = self.today
             if self.成功次数 < self.looptime:
-                return self.run(times)
+                return self.run(times=0)
         else:
             TimeECHO(f"{self.prefix}检测不到领取按钮")
         if exists(领取成功):
@@ -150,8 +152,8 @@ class app_alicloud():
                 continue
             times = times+1
             TimeECHO("="*10)
-            for i in range(self.looptime):
-                self.run()
+            self.成功次数 = 0
+            self.run()
 
 
 if __name__ == "__main__":
@@ -160,7 +162,5 @@ if __name__ == "__main__":
         config_file = str(sys.argv[1])
     Settings.Config(config_file)
     ce = app_alicloud()
-    # 每天领取多次
-    for i in range(ce.looptime):
-        ce.run()
+    ce.run()
     exit()
