@@ -66,7 +66,7 @@ class app_jd_smartrouter():
             return
         #
         if times == 4:
-            self.移动端.重启APP()
+            self.APPOB.重启APP()
         if times > 8:
             TimeECHO("失败次数太多，停止")
             self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
