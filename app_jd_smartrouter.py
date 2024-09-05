@@ -5,7 +5,7 @@
 # Author : cndaqiang             #
 # Update : 2024-08-29            #
 # Build  : 2024-08-29            #
-# What   : 网站签到         #
+# What   : 京东云无线宝领京豆     #
 ##################################
 try:
     from airtest_mobileauto.control import *
@@ -20,7 +20,7 @@ except ImportError:
 import sys
 
 
-class via_muchong():
+class app_jd_smartrouter():
     def __init__(self):
         self.prefix = self.__class__.__name__  # 类的名字
         # device
@@ -29,7 +29,7 @@ class via_muchong():
         self.LINK = Settings.LINK_dict[Settings.mynode]
         self.移动端 = deviceOB(mynode=self.mynode, totalnode=self.totalnode, LINK=self.LINK)
         self.设备类型 = self.移动端.设备类型
-        self.APPID = "mark.via"
+        self.APPID = "com.jdcloud.mt.smartrouter"
         self.APPOB = appOB(APPID=self.APPID, big=True, device=self.移动端)
         self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.prefix}.txt",
                             mynode=self.mynode, totalnode=self.totalnode)
@@ -39,6 +39,9 @@ class via_muchong():
         self.运行时间 = [3.0, 4.0]
         self.today = self.Tool.time_getweek()
         self.yesterday = (self.today-1) % 7
+        self.APPOB.big = False
+        #
+        self.looptime = 8
     #
 
     def stop(self):
@@ -62,60 +65,74 @@ class via_muchong():
             self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
             return
         #
+        if times == 4:
+            self.移动端.重启APP()
         if times > 8:
             TimeECHO("失败次数太多，停止")
             self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
             return
         #
         times = times + 1
-        # 重新打开via浏览器
+        # 重新打开程序
         self.APPOB.重启APP()
         #
         # ------------------------------------------------------------------------------
         # 不存在对应图片则设置为None
-        书签图标 = Template(r"tpl1725540057282.png", record_pos=(-0.167, 0.127), resolution=(960, 540))
-        书签图标 = Template(r"tpl1724919437374.png", record_pos=(-0.166, 0.142), resolution=(960, 540))
-        签到入口 = Template(r"tpl1724919462821.png", record_pos=(0.003, 0.182), resolution=(960, 540))
-        今日签到 = Template(r"tpl1724919477621.png", record_pos=(-0.343, 0.176), resolution=(960, 540))
-        主页入口 = Template(r"tpl1724919447239.png", record_pos=(-0.458, -0.191), resolution=(960, 540))
-        网站主页元素 = []
-        网站主页元素.append(主页入口)
-        网站主页元素.append(签到入口)
+        二级入口 = Template(r"tpl1725539964575.png", record_pos=(0.002, 0.833), resolution=(540, 960))
+        主页元素 = []
+        主页元素.append(Template(r"tpl1725539939012.png", record_pos=(-0.276, -0.804), resolution=(540, 960)))
+        主页元素.append(二级入口)
+        #
+        三级入口 = Template(r"tpl1725539970386.png", record_pos=(-0.165, -0.72), resolution=(540, 960))
+        #
+        领取按钮 = Template(r"tpl1725539985690.png", record_pos=(0.004, 0.419), resolution=(540, 960))
+        领取界面 = []
+        领取界面.append(Template(r"tpl1725539977727.png", record_pos=(-0.391, -0.052), resolution=(540, 960)))
+        领取界面.append(Template(r"tpl1725539982068.png", record_pos=(0.148, -0.048), resolution=(540, 960)))
+        领取界面.append(领取按钮)
         # ------------------------------------------------------------------------------
-        # 打开网站
-        self.Tool.existsTHENtouch(书签图标, self.prefix+"书签图标", savepos=False)
-        # 检测是否打开成功
-        存在, 网站主页元素 = self.Tool.存在任一张图(网站主页元素, self.prefix+"网站主页元素")
+        # 打开程序
         for i in range(10):
+            存在, 主页元素 = self.Tool.存在任一张图(主页元素, self.prefix+"主页元素")
             if 存在:
                 break
-            # 有则更新，无则采用旧的入口
-            self.Tool.存在任一张图([主页入口], self.prefix+"主页入口", savepos=True)
-            self.Tool.existsTHENtouch(主页入口, self.prefix+"主页入口", savepos=True)
-            sleep(5)
-            存在, 网站主页元素 = self.Tool.存在任一张图(网站主页元素, self.prefix+"网站主页元素")
+            sleep(12)
+            self.APPOB.打开APP()
+            存在, 主页元素 = self.Tool.存在任一张图(主页元素, self.prefix+"主页元素")
+        # 检测主页
+        self.Tool.存在任一张图([二级入口], self.prefix+"二级入口", savepos=True)
+        self.Tool.existsTHENtouch(二级入口, self.prefix+"二级入口", savepos=True)
         #
-        if not 存在 and times < 5:
-            TimeECHO("打开主页失败")
+        if 三级入口:
+            self.Tool.存在任一张图([三级入口], self.prefix+"三级入口", savepos=True)
+            self.Tool.existsTHENtouch(三级入口, self.prefix+"三级入口", savepos=True)
+        #
+        存在, 领取界面 = self.Tool.存在任一张图(领取界面, self.prefix+"领取界面")
+        if not 存在:
+            TimeECHO(f"{self.prefix}检测不到领取界面")
             return self.run(times)
-        # ------------------------------------------------------------------------------
         #
-        if 签到入口:
-            # 有则更新，无则采用旧的入口
-            self.Tool.存在任一张图([签到入口], self.prefix+"签到入口", savepos=True)
-            self.Tool.existsTHENtouch(签到入口, self.prefix+"签到入口", savepos=True)
-        #
-        if self.Tool.existsTHENtouch(今日签到, self.prefix+"今日签到", savepos=False):
-            self.yesterday = self.today
+        self.Tool.存在任一张图([领取按钮], self.prefix+"领取按钮", savepos=True)
+        if not self.Tool.existsTHENtouch(领取按钮, self.prefix+"领取按钮", savepos=True):
+            TimeECHO(f"{self.prefix}检测不到领取按钮")
+            return self.run(times)
         else:
-            if self.yesterday == self.today:
-                TimeECHO("找不到今日签到，应该签到过了")
-            else:
-                TimeECHO("找不到今日签到，再次尝试签到。")
-                return self.run(times)
+            for i in range(10):
+                # 这里再次点击是为了让程序人为我们在看, 使用领取图标的好处还有，万一被跳转了，还可以再点回来
+                TimeECHO(f"{self.prefix}.模拟人手点击看广告")
+                self.Tool.existsTHENtouch(领取按钮, self.prefix+"领取按钮", savepos=True)
+                # 再跳转回来, 隐含sleep(20)
+                self.APPOB.打开APP()
+                #
+                存在, 元素 = self.Tool.存在任一张图([领取按钮], self.prefix+"领取按钮", savepos=False)
+                if 存在:
+                    TimeECHO(f"{self.prefix}.注意, 貌似没有跳转到广告界面")
+                    return self.run(times)
         #
+        self.yesterday = self.today
         self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
-        return
+        self.APPOB.关闭APP()
+        return True
     #
 
     def looprun(self, times=0):
@@ -131,7 +148,8 @@ class via_muchong():
                 continue
             times = times+1
             TimeECHO("="*10)
-            self.run()
+            for i in range(self.looptime):
+                self.run()
 
 
 if __name__ == "__main__":
@@ -139,6 +157,8 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         config_file = str(sys.argv[1])
     Settings.Config(config_file)
-    ce = via_muchong()
-    ce.run()
+    ce = app_jd_smartrouter()
+    # 每天领取多次
+    for i in range(ce.looptime):
+        ce.run()
     exit()

@@ -5,7 +5,7 @@
 # Author : cndaqiang             #
 # Update : 2024-08-29            #
 # Build  : 2024-08-29            #
-# What   : 基于via浏览器的网站签到 #
+# What   : 领取所有签到红包       #
 ##################################
 try:
     from airtest_mobileauto.control import *
@@ -20,7 +20,7 @@ except ImportError:
 import sys
 import importlib
 
-class run_via():
+class autotask_android():
     def __init__(self):
         self.prefix=self.__class__.__name__ # 类的名字
         # device
@@ -29,8 +29,6 @@ class run_via():
         self.LINK = Settings.LINK_dict[Settings.mynode]
         self.移动端 = deviceOB(mynode=self.mynode, totalnode=self.totalnode, LINK=self.LINK)
         self.设备类型 = self.移动端.设备类型
-        self.APPID = "mark.via"
-        self.APPOB = appOB(APPID=self.APPID, big=True, device=self.移动端)
         self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.prefix}.txt",
                             mynode=self.mynode, totalnode=self.totalnode)
         #
@@ -43,9 +41,8 @@ class run_via():
             self.移动端.连接设备()
             return connect_status()
         return True
-    #
+    
     def stop(self):
-        self.APPOB.关闭APP()
         self.移动端.关闭设备()
     #
     def run(self):
@@ -53,7 +50,7 @@ class run_via():
             TimeECHO("无法连接设备，退出")
             return False
         #
-        taglist=["via_ablesci","via_muchong"]
+        taglist=["via_ablesci","via_muchong","app_jd_smartrouter"]
         for tag in taglist:
             if not os.path.exists(tag+".txt"):
                 TimeECHO(f"不进行{tag}")
@@ -68,12 +65,11 @@ class run_via():
                 # 使用类来创建一个对象实例
                 tag_object.APPOB.big=False
                 tag_object.run()
+                tag_object.stop()
             except:
                 traceback.print_exc()
                 continue
         #
-
-
 
     def looprun(self, times=0):
         times = times + 1
@@ -102,6 +98,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         config_file = str(sys.argv[1])
     Settings.Config(config_file)
-    ce = run_via()
+    ce = autotask_android()
     ce.looprun()
     exit()

@@ -73,6 +73,7 @@ class via_ablesci():
         #
         # ------------------------------------------------------------------------------
         # 不存在对应图片则设置为None
+        书签图标 = Template(r"tpl1725540003518.png", record_pos=(-0.241, 0.123), resolution=(960, 540))
         书签图标 = Template(r"tpl1724917367398.png", record_pos=(-0.234, 0.136), resolution=(960, 540))
         签到入口 = Template(r"tpl1724917379162.png", record_pos=(0.266, -0.036), resolution=(960, 540))
         今日签到 = Template(r"tpl1724917393304.png", record_pos=(0.155, 0.132), resolution=(960, 540))
