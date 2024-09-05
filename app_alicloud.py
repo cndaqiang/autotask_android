@@ -119,6 +119,7 @@ class app_alicloud():
         # 检测是否有领取按钮，有的话，领取之后再循环一次检测是否有领取成功按钮
         if self.Tool.existsTHENtouch(领取按钮, self.prefix+"领取按钮", savepos=True):
             self.成功次数 = self.成功次数 + 1
+            TimeECHO(f"{self.prefix}.....成功次数{self.成功次数}....")
             self.yesterday = self.today
             if self.成功次数 < self.looptime:
                 return self.run(times=0)

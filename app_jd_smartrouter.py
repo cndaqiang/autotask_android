@@ -120,6 +120,7 @@ class app_jd_smartrouter():
             return self.run(times)
         else:
             self.成功次数 = self.成功次数 + 1
+            TimeECHO(f"{self.prefix}.....成功次数{self.成功次数}....")
             self.yesterday = self.today
             for i in range(10):
                 # 这里再次点击是为了让程序人为我们在看, 使用领取图标的好处还有，万一被跳转了，还可以再点回来
