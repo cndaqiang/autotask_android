@@ -41,7 +41,7 @@ class app_jd_smartrouter():
         self.yesterday = (self.today-1) % 7
         self.APPOB.big = False
         #
-        self.looptime = 8
+        self.looptime = 4
         self.成功次数 = 0
     #
 
