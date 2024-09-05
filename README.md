@@ -48,6 +48,7 @@ python via_ablesci.py config.win.txt
 
 ## 基于app的签到
 * `app_jd_smartrouter`, 京东无线宝路由器,每日看广告领京豆
+* `app_alicloud`, 阿里云盘每日签到(横屏版960x540)
 
 ## 全部签到
 * Windows可以点击`run.bat`， 亦可以`python run.py`

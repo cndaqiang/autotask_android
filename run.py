@@ -50,7 +50,7 @@ class autotask_android():
             TimeECHO("无法连接设备，退出")
             return False
         #
-        taglist=["via_ablesci","via_muchong","app_jd_smartrouter"]
+        taglist=["via_ablesci","via_muchong","app_jd_smartrouter","app_alicloud"]
         for tag in taglist:
             if not os.path.exists(tag+".txt"):
                 TimeECHO(f"不进行{tag}")
