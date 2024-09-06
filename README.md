@@ -47,7 +47,8 @@ python via_ablesci.py config.win.txt
 
 
 ## 基于app的签到
-* `app_jd_smartrouter`, 京东无线宝路由器,每日看广告领京豆
+* `app_jd_smartrouter`, 京东无线宝路由器,每日看广告领京豆.
+* * 模拟器领取存在各种问题，不再更新，手机版见`app_jd_smartrouter_m`
 * `app_alicloud`, 阿里云盘每日签到(横屏版960x540)
 
 ## 全部签到
@@ -55,6 +56,30 @@ python via_ablesci.py config.win.txt
 * 只有存在`tag.txt`时，才会领取`tag.py`中定义的礼包
 * 将`run.bat`添加到Windows的自动化任务
 ![alt text](doc/crontab_win.png)
+
+## 其他
+* 有些APP无法用模拟器打开，这些程序控制我的手机领取
+* * 如京东无线宝, MuMu模拟器打不开, LDPlayer领取四次后再领取就卡住不动
+* * 运行`python run.m.py`或者`run.m.bat`
+* 开发注意
+* * 由于手机会自动锁屏，所以在脚本运行开头需要`self.移动端.解锁设备()`
+* 目前支持的模块
+* * `app_jd_smartrouter_m`,京东无线宝路由器
+* 我的配置文件`config.m.txt`
+```
+[client]
+# 节点配置
+mynode = 0
+multiprocessing = True
+LINK_dict = {
+    0: "Android:///4e86ac13"}
+[control]
+figdir=assets
+logfile={
+    0: "result.m.txt"}
+```
+
+
 
 ## Star History
 
