@@ -46,7 +46,7 @@ class autotask_android():
                     script_name = os.path.basename(__file__)
                     if file.endswith('_m.py') and script_name == "run.m.py":
                         pass
-                    elif file.endswith('_m.py') and script_name == "run.py":
+                    elif not file.endswith('_m.py') and script_name == "run.py":
                         pass
                     else:
                         continue
