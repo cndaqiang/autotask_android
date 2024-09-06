@@ -35,6 +35,26 @@ class autotask_android():
         self.只战一天FILE =f"{self.prefix}.oneday.txt"  # 今天执行完之后，直接结束程序。适用采用crontab等模式周期性运行脚本，而不采用本脚本自带的循环。
         self.timelimit = 60*10
         self.运行时间 = [0.01, 23.5]
+        # 模块
+        py_files = []
+        for root, dirs, files in os.walk("."):
+            for file in files:
+                if file.endswith('.py') and not file.startswith('run.'):
+                    #筛选模块
+                    #_m.py结尾的是高分辨率手机的模块
+                    # 获取当前脚本的完整路径
+                    script_name = os.path.basename(__file__)
+                    if file.endswith('_m.py') and script_name == "run.m.py":
+                        pass
+                    elif file.endswith('_m.py') and script_name == "run.py":
+                        pass
+                    else:
+                        continue
+                    #
+                    # 使用os.path.splitext()去除扩展名
+                    file_name_without_extension = os.path.splitext(file)[0]
+                    py_files.append(file_name_without_extension)
+        self.taglist=py_files
 
     def check_status(self):
         if not connect_status():
@@ -44,14 +64,14 @@ class autotask_android():
     
     def stop(self):
         self.移动端.关闭设备()
+        return
     #
     def run(self):
         if not self.check_status():
             TimeECHO("无法连接设备，退出")
             return False
         #
-        taglist=["via_ablesci","via_muchong","app_jd_smartrouter","app_alicloud"]
-        for tag in taglist:
+        for tag in self.taglist:
             if not os.path.exists(tag+".txt"):
                 TimeECHO(f"不进行{tag}")
                 continue

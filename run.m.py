@@ -63,7 +63,7 @@ class autotask_android():
         return True
     
     def stop(self):
-        #self.移动端.关闭设备()
+        self.移动端.关闭设备()
         return
     #
     def run(self):
