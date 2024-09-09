@@ -5,7 +5,7 @@
 # Author : cndaqiang             #
 # Update : 2024-08-29            #
 # Build  : 2024-08-29            #
-# What   : 京东云无线宝领京豆     #
+# What   : 阿里云盘签到           #
 ##################################
 try:
     from airtest_mobileauto.control import *

@@ -63,7 +63,8 @@ class autotask_android():
         return True
     
     def stop(self):
-        self.移动端.关闭设备()
+        # 手机不要重启，很多服务还需要手动启动
+        # self.移动端.关闭设备()
         return
     #
     def run(self):
