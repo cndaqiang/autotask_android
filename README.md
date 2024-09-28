@@ -21,15 +21,14 @@ python -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/s
 
 ```
 [client]
-# 节点配置
-mynode = 0
-LDPlayerdir = D:\GreenSoft\LDPlayer
-multiprocessing = True
-LINK_dict = {
-    0: "Android:///127.0.0.1:5555"}
+mynode = 1
+BlueStackdir = C:\Program Files\BlueStacks_nxt
+BlueStack_Instance ={1: "Nougat32_4"}
+BlueStack_Windows = {1: "autotask"}
+LINK_dict = {1: "Android:///127.0.0.1:5595"}
 [control]
-logfile={
-    0: "result.txt"}
+figdir=assets
+logfile={1: "result.1.txt"}
 ```
 
 ## 运行示例
