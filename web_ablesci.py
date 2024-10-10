@@ -20,7 +20,7 @@ except ImportError:
 import sys
 
 
-class via_ablesci():
+class web_ablesci():
     def __init__(self):
         self.prefix = self.__class__.__name__  # 类的名字
         # device
@@ -29,8 +29,10 @@ class via_ablesci():
         self.LINK = Settings.LINK_dict[Settings.mynode]
         self.移动端 = deviceOB(mynode=self.mynode, totalnode=self.totalnode, LINK=self.LINK)
         self.设备类型 = self.移动端.设备类型
-        self.APPID = "mark.via"
-        self.APPOB = appOB(APPID=self.APPID, big=True, device=self.移动端)
+        # 打开网址，并将默认的浏览器设置为APPID
+        self.url = "https://www.ablesci.com/"
+        self.移动端.打开网址(self.url)
+        self.APPOB = appOB(big=True, device=self.移动端)
         self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.prefix}.txt",
                             mynode=self.mynode, totalnode=self.totalnode)
         #
@@ -62,19 +64,19 @@ class via_ablesci():
             self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
             return
         #
+        if times == 4:
+            # 卡顿则重新打开浏览器
+            self.APPOB.重启APP()
+            self.移动端.打开网址(self.url)
         if times > 8:
             TimeECHO("失败次数太多，停止")
             self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
             return
         #
         times = times + 1
-        # 重新打开via浏览器
-        self.APPOB.重启APP()
         #
         # ------------------------------------------------------------------------------
         # 不存在对应图片则设置为None
-        书签图标 = Template(r"tpl1725540003518.png", record_pos=(-0.241, 0.123), resolution=(960, 540))
-        书签图标 = Template(r"tpl1724917367398.png", record_pos=(-0.234, 0.136), resolution=(960, 540))
         签到入口 = Template(r"tpl1724917379162.png", record_pos=(0.266, -0.036), resolution=(960, 540))
         今日签到 = Template(r"tpl1724917393304.png", record_pos=(0.155, 0.132), resolution=(960, 540))
         主页入口 = Template(r"tpl1724918907933.png", record_pos=(-0.398, -0.18), resolution=(960, 540))
@@ -83,21 +85,16 @@ class via_ablesci():
         网站主页元素.append(签到入口)
         # ------------------------------------------------------------------------------
         # 打开网站
-        self.Tool.existsTHENtouch(书签图标, self.prefix+"书签图标", savepos=False)
         # 检测是否打开成功
+        # 因为在init时已经打开过了，这里直接检测
         存在, 网站主页元素 = self.Tool.存在任一张图(网站主页元素, self.prefix+"网站主页元素")
-        for i in range(10):
-            if 存在:
-                break
-            # 有则更新，无则采用旧的入口
-            self.Tool.存在任一张图([主页入口], self.prefix+"主页入口", savepos=True)
-            self.Tool.existsTHENtouch(主页入口, self.prefix+"主页入口", savepos=True)
-            sleep(5)
+        if not 存在:
+            sleep(30)
             存在, 网站主页元素 = self.Tool.存在任一张图(网站主页元素, self.prefix+"网站主页元素")
-        #
-        if not 存在 and times < 5:
-            TimeECHO("打开主页失败")
-            return self.run(times)
+            if not 存在:
+                sleep(30)
+                self.移动端.打开网址(self.url)
+                return self.run(times)
         # ------------------------------------------------------------------------------
         #
         if 签到入口:
@@ -139,6 +136,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         config_file = str(sys.argv[1])
     Settings.Config(config_file)
-    ce = via_ablesci()
+    ce = web_ablesci()
     ce.run()
     exit()
