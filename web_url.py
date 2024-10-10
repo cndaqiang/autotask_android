@@ -21,7 +21,7 @@ import sys
 
 
 class web_url():
-    def __init__(self, url="https://cndaqiang.github.io/"):
+    def __init__(self, url="http://127.0.0.1/"):
         self.prefix = self.__class__.__name__  # 类的名字
         # device
         self.mynode = Settings.mynode
