@@ -44,6 +44,13 @@ logfile={1: "result.1.txt"}
 ![alt text](doc/crontab_win.png)
 
 ## 当前开发项目
+### 基于url的签到
+* `web_url`,直接打开特定url,实现签到, **适配任意的安卓设备**
+* 将url存储到`web_url.txt`,下面是我常用的url
+```
+none
+```
+
 ### 基于浏览器的签到
 * *注: 本脚本于via-5.9.0测试通过, 需开启桌面模式、全屏、浏览器标识(windows/chrome),其他浏览器自行替换图片资源*
 * `web_ablesci`, [科研通](https://www.ablesci.com/)每日签到
