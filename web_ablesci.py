@@ -29,11 +29,11 @@ class web_ablesci():
         self.LINK = Settings.LINK_dict[Settings.mynode]
         self.移动端 = deviceOB(mynode=self.mynode, totalnode=self.totalnode, LINK=self.LINK)
         self.设备类型 = self.移动端.设备类型
-        # 打开网址，并将默认的浏览器设置为APPID
+        # 打开网址，@todo 替换此处的网址为礼包页面，并将默认的浏览器设置为APPID
         self.url = "https://www.ablesci.com/"
         self.移动端.打开网址(self.url)
         self.APPOB = appOB(big=True, device=self.移动端)
-        self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.prefix}.txt",
+        self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.prefix}.yaml",
                             mynode=self.mynode, totalnode=self.totalnode)
         #
         self.dayFILE = f"{self.prefix}.txt"
@@ -77,12 +77,10 @@ class web_ablesci():
         #
         # ------------------------------------------------------------------------------
         # 不存在对应图片则设置为None
-        签到入口 = Template(r"tpl1724917379162.png", record_pos=(0.266, -0.036), resolution=(960, 540))
         今日签到 = Template(r"tpl1724917393304.png", record_pos=(0.155, 0.132), resolution=(960, 540))
         主页入口 = Template(r"tpl1724918907933.png", record_pos=(-0.398, -0.18), resolution=(960, 540))
         网站主页元素 = []
         网站主页元素.append(主页入口)
-        网站主页元素.append(签到入口)
         # ------------------------------------------------------------------------------
         # 打开网站
         # 检测是否打开成功
@@ -96,11 +94,6 @@ class web_ablesci():
                 self.移动端.打开网址(self.url)
                 return self.run(times)
         # ------------------------------------------------------------------------------
-        #
-        if 签到入口:
-            # 有则更新，无则采用旧的入口
-            self.Tool.存在任一张图([签到入口], self.prefix+"签到入口", savepos=True)
-            self.Tool.existsTHENtouch(签到入口, self.prefix+"签到入口", savepos=True)
         #
         if self.Tool.existsTHENtouch(今日签到, self.prefix+"今日签到", savepos=False):
             self.yesterday = self.today

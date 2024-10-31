@@ -31,7 +31,7 @@ class app_alicloud():
         self.设备类型 = self.移动端.设备类型
         self.APPID = "com.alicloud.databox"
         self.APPOB = appOB(APPID=self.APPID, big=True, device=self.移动端)
-        self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.prefix}.txt",
+        self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.prefix}.yaml",
                             mynode=self.mynode, totalnode=self.totalnode)
         #
         self.dayFILE = f"{self.prefix}.txt"
