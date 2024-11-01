@@ -77,6 +77,7 @@ class app_alicloud():
         #
         # ------------------------------------------------------------------------------
         # 不存在对应图片则设置为None
+        开屏广告 = Template(r"tpl1730443076289.png", record_pos=(0.167, -0.224), resolution=(960, 540))
         二级入口 = None
         主页元素 = []
         主页元素.append(Template(r"tpl1725544480761.png", record_pos=(0.226, 0.013), resolution=(960, 540)))
@@ -91,13 +92,22 @@ class app_alicloud():
         领取界面.append(领取按钮)
         领取界面.append(领取成功)
         # ------------------------------------------------------------------------------
+        if times %3 == 2:
+            # 强制点击开屏广告
+            sleep(2)
+            self.Tool.touch_record_pos(record_pos=开屏广告.record_pos, resolution=self.移动端.resolution, keystr=self.prefix+"开屏广告")
+            sleep(2)
         # 打开程序
         for i in range(10):
             存在, 主页元素 = self.Tool.存在任一张图(主页元素, self.prefix+"主页元素")
             if 存在:
                 break
-            sleep(12)
+            sleep(5)
             self.APPOB.打开APP()
+            # 开屏广告
+            if 开屏广告:
+                self.Tool.existsTHENtouch(开屏广告, self.prefix+"开屏广告", savepos=False)
+            #
             存在, 主页元素 = self.Tool.存在任一张图(主页元素, self.prefix+"主页元素")
         # 寻找入口
         if 二级入口:
