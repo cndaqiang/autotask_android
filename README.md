@@ -4,6 +4,18 @@
 
 ![GitHub forks](https://img.shields.io/github/forks/cndaqiang/autotask_android?color=60c5ba&style=for-the-badge)![GitHub stars](https://img.shields.io/github/stars/cndaqiang/autotask_android?color=ffd700&style=for-the-badge)
 
+
+## 脚本开发环境说明
+* 本脚本基于分辨率`960x540`, dpi`160`的安卓模拟器开发
+* dpi或者分辨率不同很容易识别失败。
+* 有的模拟器打开特定APP会闪退
+
+环境依赖
+
+```
+python -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple  --upgrade
+```
+
 ## 当前开发项目
 ### 基于url的签到
 * `web_url`,直接打开特定url,实现签到, **适配任意的安卓设备**
@@ -21,16 +33,6 @@ none
 * `app_alicloud`, 阿里云盘每日签到(横屏版960x540)
 
 
-## 脚本开发环境说明
-* 本脚本基于分辨率`960x540`, dpi`160`的安卓模拟器开发
-* dpi或者分辨率不同很容易识别失败。
-* 有的模拟器打开特定APP会闪退
-
-环境依赖
-
-```
-python -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple  --upgrade
-```
 
 
 ## 运行

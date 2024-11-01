@@ -79,8 +79,7 @@ class web_muchong():
         # 不存在对应图片则设置为None
         今日签到 = Template(r"tpl1724919477621.png", record_pos=(-0.343, 0.176), resolution=(960, 540))
         主页入口 = Template(r"tpl1724919447239.png", record_pos=(-0.458, -0.191), resolution=(960, 540))
-        网站主页元素 = []
-        网站主页元素.append(主页入口)
+        网站主页元素 = [今日签到, 主页入口]
         # ------------------------------------------------------------------------------
         # 打开网站
         # 检测是否打开成功
@@ -101,7 +100,7 @@ class web_muchong():
             if self.yesterday == self.today:
                 TimeECHO("找不到今日签到，应该签到过了")
             else:
-                TimeECHO("找不到今日签到，再次尝试签到。")
+                TimeECHO("找不到今日签到，再次尝试签到")
                 return self.run(times)
         #
         self.Tool.touchfile(self.dayFILE, content=str(self.yesterday))
