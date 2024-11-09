@@ -26,6 +26,7 @@ none
 
 ### 基于浏览器的签到
 * *注: 本脚本于via-5.9.0测试通过, 需开启桌面模式、全屏、浏览器标识(windows/chrome),其他浏览器自行替换图片资源*
+* 只能在境内的模拟器/容器内执行, 这些网站在不同地区显示的内容不同.
 * `web_ablesci`, [科研通](https://www.ablesci.com/)每日签到
 * `web_muchong`, [小木虫](https://muchong.com/bbs/)每日签到
 
@@ -51,6 +52,7 @@ BlueStack_Windows: {1: "autotask"}
 LINK_dict: {1: "Android:///127.0.0.1:5575"}
 figdir: assets
 logfile: {1: "result.1.txt"}
+prefix: "autotask"
 ```
 
 

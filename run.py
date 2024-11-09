@@ -32,7 +32,7 @@ class autotask_android():
         self.Tool = DQWheel(var_dict_file=f"{self.移动端.设备类型}.var_dict_{self.prefix}.yaml",
                             mynode=self.mynode, totalnode=self.totalnode)
         #
-        self.只战一天FILE =f"{self.prefix}.oneday.txt"  # 今天执行完之后，直接结束程序。适用采用crontab等模式周期性运行脚本，而不采用本脚本自带的循环。
+        self.内置循环FILE =f"{self.prefix}.loop.txt"  # 采用本脚本自带的循环。
         self.timelimit = 60*10
         self.运行时间 = [0.01, 23.5]
         # 模块
@@ -107,7 +107,7 @@ class autotask_android():
             TimeECHO("="*10)
             self.run()
             #
-            if os.path.exists(self.只战一天FILE):
+            if not os.path.exists(self.内置循环FILE):
                 return self.stop()
             # 如果提前结束了，就让脚本再等一会
             leftmin = self.Tool.hour_in_span(endclock+0.1,startclock)*60.0
