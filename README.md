@@ -2,7 +2,7 @@
 
 基于[airtest_mobileauto](airtest_mobileauto)的安卓自动化任务脚本
 
-![GitHub forks](https://img.shields.io/github/forks/MobileAutoFlow/autoAnSign?color=60c5ba&style=for-the-badge)![GitHub stars](https://img.shields.io/github/stars/MobileAutoFlow/autoAnSign?color=ffd700&style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/MobileAutoFlow/AutoAnSign?color=60c5ba&style=for-the-badge)![GitHub stars](https://img.shields.io/github/stars/MobileAutoFlow/AutoAnSign?color=ffd700&style=for-the-badge)
 
 
 ## 脚本开发环境说明
@@ -13,7 +13,7 @@
 安装
 
 ```
-python -m pip install autoAnSign --upgrade
+python -m pip install AutoAnSign --upgrade
 ```
 
 ## 当前开发项目
@@ -45,17 +45,19 @@ python run.py config.win.yaml
 
 我的配置文件 `config.win.yaml`
 ```
-mynode: 1
-BlueStackdir: C:\Program Files\BlueStacks_nxt
-BlueStack_Instance: {1: "Pie64_2"}
-BlueStack_Windows: {1: "autotask"}
-LINK_dict: {1: "Android:///127.0.0.1:5575"}
+mynode: 10
+MuMudir: 'D:\Program Files\Netease\MuMu Player 12\shell'
+MuMu_Instance:
+  10: "0"
+LINK_dict:
+  10: Android:///127.0.0.1:16384
 figdir: assets
-logfile: {1: "result.1.txt"}
+logfile:
+  10: result.ce.txt
 prefix: "autotask"
 ```
 
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=MobileAutoFlow/autoAnSign&type=Date)](https://star-history.com/#MobileAutoFlow/autoAnSign&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=MobileAutoFlow/AutoAnSign&type=Date)](https://star-history.com/#MobileAutoFlow/AutoAnSign&Date)
