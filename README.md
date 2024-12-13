@@ -2,7 +2,7 @@
 
 基于[airtest_mobileauto](airtest_mobileauto)的安卓自动化任务脚本
 
-![GitHub forks](https://img.shields.io/github/forks/cndaqiang/autotask_android?color=60c5ba&style=for-the-badge)![GitHub stars](https://img.shields.io/github/stars/cndaqiang/autotask_android?color=ffd700&style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/MobileAutoFlow/autoAnSign?color=60c5ba&style=for-the-badge)![GitHub stars](https://img.shields.io/github/stars/MobileAutoFlow/autoAnSign?color=ffd700&style=for-the-badge)
 
 
 ## 脚本开发环境说明
@@ -10,10 +10,10 @@
 * dpi或者分辨率不同很容易识别失败。
 * 有的模拟器打开特定APP会闪退
 
-环境依赖
+安装
 
 ```
-python -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple  --upgrade
+python -m pip install autoAnSign --upgrade
 ```
 
 ## 当前开发项目
@@ -56,10 +56,6 @@ prefix: "autotask"
 ```
 
 
-## 计划任务
-* Windows可以点击`run.bat`， 或将`run.bat`添加到Windows的自动化任务
-![alt text](doc/crontab_win.png)
-
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=cndaqiang/autotask_android&type=Date)](https://star-history.com/#cndaqiang/autotask_android&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=MobileAutoFlow/autoAnSign&type=Date)](https://star-history.com/#MobileAutoFlow/autoAnSign&Date)

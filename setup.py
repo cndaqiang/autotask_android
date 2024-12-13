@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='autoAnSign',
-    version='0.0.1',
+    version='0.0.1p1',
     # 版本号后缀说明：
     # - a1：早期测试版（Alpha 版本）
     # - b1：功能较完整但可能有问题的测试版（Beta 版本）
@@ -19,9 +19,8 @@ setup(
     # 需要在AutoWZRY下面创建__init__.[y]
     package_data={             # 指定需要包含的额外文件
         'autoAnSign': [
-            'assets/*',         # 包括 AutoWZRY/assets 下的所有文件
-            'README.md',         # 包括 AutoWZRY/assets 下的所有文件
-            'LICENSE',         # 包括 AutoWZRY/assets 下的所有文件
+            'assets/*',         # 包括 autoAnSign/assets 下的所有文件
+            'LICENSE', 
         ],
     },
     include_package_data=True,  # 自动包含 package_data 中指定的文件
