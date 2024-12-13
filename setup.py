@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='autoAnSign',
-    version='0.0.1p1',
+    version='0.0.1.post1',
     # 版本号后缀说明：
     # - a1：早期测试版（Alpha 版本）
     # - b1：功能较完整但可能有问题的测试版（Beta 版本）
