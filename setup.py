@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='AutoAnSign',
+    name='autosign',
     version='0.0.1.post2',
     # 版本号后缀说明：
     # - a1：早期测试版（Alpha 版本）
@@ -13,26 +13,26 @@ setup(
     author='cndaqiang',
     author_email='who@cndaqiang.ac.cn',
     description='安卓签到',
-    long_description=open('README.md', encoding='utf-8').read(),  # 从 AutoAnSign/README.md 读取 long description
+    long_description=open('README.md', encoding='utf-8').read(),  # 从 autosign/README.md 读取 long description
     long_description_content_type='text/markdown',
     packages=find_packages(),  # 自动查找所有子包
     # 需要在AutoWZRY下面创建__init__.[y]
     package_data={             # 指定需要包含的额外文件
-        'AutoAnSign': [
-            'assets/*',         # 包括 autoAnSign/assets 下的所有文件
+        'autosign': [
+            'assets/*',         # 包括 autosign/assets 下的所有文件
         ],
     },
     include_package_data=True,  # 自动包含 package_data 中指定的文件
-    url='https://github.com/MobileAutoFlow/AutoAnSign',
+    url='https://github.com/MobileAutoFlow/autosign',
     install_requires=[
         'airtest-mobileauto>=2.1.2',
     ],
     entry_points={
         'console_scripts': [
-            'autoablesci=AutoAnSign.web_ablesci:main',  # 直接引用脚本文件
-            'automuchong=AutoAnSign.web_muchong:main',  # 直接引用脚本文件
-            'autourl=AutoAnSign.web_url:main',  # 直接引用脚本文件
-            'autoalicloud=AutoAnSign.app_alicloud:main',  # 直接引用脚本文件
+            'autoablesci=autosign.web_ablesci:main',  # 直接引用脚本文件
+            'automuchong=autosign.web_muchong:main',  # 直接引用脚本文件
+            'autourl=autosign.web_url:main',  # 直接引用脚本文件
+            'autoalicloud=autosign.app_alicloud:main',  # 直接引用脚本文件
         ],
     },
     classifiers=[

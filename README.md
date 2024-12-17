@@ -2,7 +2,7 @@
 
 基于[airtest_mobileauto](airtest_mobileauto)的安卓自动化任务脚本
 
-![GitHub forks](https://img.shields.io/github/forks/MobileAutoFlow/AutoAnSign?color=60c5ba&style=for-the-badge)![GitHub stars](https://img.shields.io/github/stars/MobileAutoFlow/AutoAnSign?color=ffd700&style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/MobileAutoFlow/autosign?color=60c5ba&style=for-the-badge)![GitHub stars](https://img.shields.io/github/stars/MobileAutoFlow/autosign?color=ffd700&style=for-the-badge)
 
 
 ## 脚本开发环境说明
@@ -13,7 +13,7 @@
 安装
 
 ```
-python -m pip install AutoAnSign --upgrade
+python -m pip install autosign --upgrade
 ```
 
 ## 当前开发项目
@@ -60,4 +60,4 @@ prefix: "autotask"
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=MobileAutoFlow/AutoAnSign&type=Date)](https://star-history.com/#MobileAutoFlow/AutoAnSign&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=MobileAutoFlow/autosign&type=Date)](https://star-history.com/#MobileAutoFlow/autosign&Date)
