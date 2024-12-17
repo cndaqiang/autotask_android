@@ -1,8 +1,8 @@
 # autotask_android
 
-基于[airtest_mobileauto](airtest_mobileauto)的安卓自动化任务脚本
+基于[airtest_mobileauto](https://pypi.org/project/airtest-mobileauto)的安卓自动化任务脚本
 
-![GitHub forks](https://img.shields.io/github/forks/MobileAutoFlow/autosign?color=60c5ba&style=for-the-badge)![GitHub stars](https://img.shields.io/github/stars/MobileAutoFlow/autosign?color=ffd700&style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/MobileAutoFlow/autoansign?color=60c5ba&style=for-the-badge)![GitHub stars](https://img.shields.io/github/stars/MobileAutoFlow/autoansign?color=ffd700&style=for-the-badge)
 
 
 ## 脚本开发环境说明
@@ -13,7 +13,7 @@
 安装
 
 ```
-python -m pip install autosign --upgrade
+python -m pip install autoansign --upgrade
 ```
 
 ## 当前开发项目
@@ -60,4 +60,4 @@ prefix: "autotask"
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=MobileAutoFlow/autosign&type=Date)](https://star-history.com/#MobileAutoFlow/autosign&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=MobileAutoFlow/autoansign&type=Date)](https://star-history.com/#MobileAutoFlow/autoansign&Date)
